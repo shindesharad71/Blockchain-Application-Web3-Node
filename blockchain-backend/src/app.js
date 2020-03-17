@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+const Web3 = require('web3');
 
 require('dotenv').config();
 
@@ -13,6 +14,11 @@ const app = express();
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
+
+const web3Client = new Web3(Web3.givenProvider || "ws://localhost:7545");
+
+console.log(web3Client);
+
 
 app.get('/', (req, res) => {
   res.json({
