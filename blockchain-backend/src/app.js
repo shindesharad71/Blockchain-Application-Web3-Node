@@ -19,21 +19,14 @@ const web3Client = new Web3(
 );
 
 app.get("/create", async (req, res) => {
-  // const account = await web3Client.eth.accounts.create();
-  const account = await web3Client.eth.personal.newAccount('password');
+  const account = await web3Client.eth.accounts.create();
   res.status(201).json(account);
-});
-
-app.get("/create/wallet", async (req, res) => {
-  const wallet = await web3Client.eth.accounts.privateKeyToAccount(
-    "0xC59605638ED005c93E2A6AE13F6214145A22019e"
-  );
-  res.status(201).json(wallet);
 });
 
 app.get("/balance/:walletAddress", async (req, res) => {
   const { walletAddress } = req.params;
   let walletBalance = await web3Client.eth.getBalance(walletAddress);
+  walletBalance = web3Client.utils.fromWei(walletBalance, 'ether') 
   res.status(201).json({ balance: walletBalance});
 });
 
