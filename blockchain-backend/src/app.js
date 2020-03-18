@@ -43,10 +43,15 @@ app.get("/create", async (req, res) => {
 });
 
 app.get("/balance/:walletAddress", async (req, res) => {
-  const { walletAddress } = req.params;
-  let walletBalance = await web3Client.eth.getBalance(walletAddress);
-  walletBalance = web3Client.utils.fromWei(walletBalance, "ether");
-  res.status(201).json({ balance: walletBalance });
+  try {
+    const { walletAddress } = req.params;
+    let walletBalance = await web3Client.eth.getBalance(walletAddress);
+    walletBalance = web3Client.utils.fromWei(walletBalance, "ether");
+    res.status(201).json({ balance: walletBalance });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
 });
 
 app.get("/send", async (req, res) => {
