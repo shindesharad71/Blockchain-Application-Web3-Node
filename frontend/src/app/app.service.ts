@@ -16,9 +16,8 @@ export class AppService {
   getBalance() {
     const userId = window.localStorage.getItem('userId');
     if (userId) {
-      return this.http.get(`${environment.BASE_URL}balance/${userId});
-    } else {
-      return false;
+      return this.http.get(`${environment.BASE_URL}balance/${userId}`);
     }
+    return false;
   }
 }

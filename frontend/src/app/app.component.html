@@ -1,0 +1,17 @@
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" style="text-align: center; width: 100%;">Blockchain Application (ETH) With Web3</a>
+</nav>
+
+<div class="container" *ngIf="!isAccountCreated">
+  <h1>Please Create Account To Start Transactions</h1>
+  <button (click)="createAccount()">Create</button>
+</div>
+
+<div class="container" *ngIf="isAccountCreated">
+  <div class="account-details" *ngIf="accountDetails">
+    <h3>Account Details</h3>
+    <p>Address: {{accountDetails?.address}}</p>
+    <p>Private Key: {{accountDetails?.privateKey}}</p>
+  </div>
+</div>
