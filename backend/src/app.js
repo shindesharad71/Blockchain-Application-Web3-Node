@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 require("dotenv").config();
 const middlewares = require("./middlewares");
-const Account = require("./models/account");
+const AccountSchema = require("./models/account");
 
 const app = express();
 
@@ -33,9 +33,9 @@ const web3Client = new Web3(
 app.get("/create", async (req, res) => {
   try {
     const accountCreated = await web3Client.eth.accounts.create();
-    const account = new Account(accountCreated);
-    await account.save();
-    res.status(201).json(accountCreated);
+    const account = new AccountSchema.Account(accountCreated);
+    const result = await account.save();
+    res.status(201).json(result);
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
