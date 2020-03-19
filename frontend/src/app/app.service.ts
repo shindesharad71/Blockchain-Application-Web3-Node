@@ -20,4 +20,11 @@ export class AppService {
     }
     return false;
   }
+
+  getUserById() {
+    const userId = window.localStorage.getItem('userId');
+    if (userId) {
+      return this.http.get(`${environment.BASE_URL}user/${userId}`);
+    }
+  }
 }

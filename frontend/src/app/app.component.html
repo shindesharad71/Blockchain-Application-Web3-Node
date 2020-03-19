@@ -5,25 +5,27 @@
   >
 </nav>
 
-<div class="container h-100 mt-200">
+<div class="container h-100 mt-200" *ngIf="!isAccountCreated">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-12 text-center">
       <h1>Please Create Account To Start Transactions</h1>
       <button type="button" class="btn btn-primary" (click)="createAccount()">
         Create Account
       </button>
-    </div>   
+    </div>
   </div>
 </div>
 
-<div class="container h-100 mt-200">
+<div class="container h-100" *ngIf="isAccountCreated">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-12">
       <div class="account-details" *ngIf="accountDetails">
-        <h3>Account Details</h3>
-        <p>Address: {{ accountDetails?.address }}</p>
-        <p>Private Key: {{ accountDetails?.privateKey }}</p>
+        <div class="alert alert-success" role="alert">
+          <p>Account Details</p>
+          <p>Address: {{ accountDetails?.address }}</p>
+          <p>Private Key: {{ accountDetails?.privateKey }}</p>
+        </div>
       </div>
-    </div>   
+    </div>
   </div>
 </div>

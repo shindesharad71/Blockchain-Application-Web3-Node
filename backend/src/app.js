@@ -42,6 +42,17 @@ app.get("/create", async (req, res) => {
   }
 });
 
+app.get("/user/:userId", async (req, res) => {
+  try {
+    const {userId} = req.params;
+    const result = await AccountSchema.Account.findById(userId);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+});
+
 app.get("/balance/:walletAddress", async (req, res) => {
   try {
     const { walletAddress } = req.params;
