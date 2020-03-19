@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AppService } from './app.service';
+import { Component, OnInit } from "@angular/core";
+import { AppService } from "./app.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
   isAccountCreated = false;
@@ -12,16 +12,16 @@ export class AppComponent implements OnInit {
   accountBalance = 0;
   toAddress: string;
   amount: number;
-  constructor(private appService: AppService) {
-
-  }
+  transactionStatus: any;
+  userId: string;
+  constructor(private appService: AppService) {}
 
   ngOnInit() {
     this.checkIfAccountCreated();
   }
 
   checkIfAccountCreated(): void {
-    const userId: string = window.localStorage.getItem('userId');
+    const userId: string = window.localStorage.getItem("userId");
     if (userId) {
       this.isAccountCreated = true;
       this.getUserById();
@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
     this.appService.createAccount().subscribe((res: any) => {
       this.accountDetails = res;
       window.localStorage.setItem('userId', res._id);
+      this.userId = res._id;
       this.checkIfAccountCreated();
     });
   }
@@ -61,7 +62,18 @@ export class AppComponent implements OnInit {
   transfer() {
     console.log(this.toAddress);
     console.log(this.amount);
-    
-    
+
+    const transactionPayload = {
+      from: this.userId,
+      to: this.toAddress,
+      value: this.amount
+    };
+
+    this.appService.makeTransaction(transactionPayload).subscribe((res: any) => {
+      console.log(res);
+      this.transactionStatus = res;
+      this.toAddress = '';
+      this.amount  = 0;
+    });
   }
 }

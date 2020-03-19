@@ -26,4 +26,8 @@ export class AppService {
       return this.http.get(`${environment.BASE_URL}user/${userId}`);
     }
   }
+
+  makeTransaction(transactionPayload: any) {
+    return this.http.post(`${environment.BASE_URL}send`, transactionPayload);
+  }
 }

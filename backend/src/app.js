@@ -68,9 +68,9 @@ app.get("/balance/:walletAddress", async (req, res) => {
 app.get("/send", async (req, res) => {
   try {
     const transaction = await web3Client.eth.sendTransaction({
-      from: "0x64206d82EeC6CaE2fa010C365Ca1BDa3803B5C07",
-      to: "0x5F3Cb193eB20f24bDD746B9FA33680c292b8fe38",
-      value: web3Client.utils.toWei("1", "ether")
+      from: "0x5F3Cb193eB20f24bDD746B9FA33680c292b8fe38",
+      to: "0x7CdBA8B5f12ed5310c8d2fd93bc28Ba8DF44fa62",
+      value: web3Client.utils.toWei("50", "ether")
     });
     res.status(201).json(transaction);
   } catch (error) {

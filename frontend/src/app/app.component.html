@@ -75,10 +75,13 @@
         <button type="submit" class="btn btn-primary" [disabled]="!toAddress && !amount" (click)="transfer()">Transfer</button>
       </form>
     </div>
-    <div class="col-4">
+    <div class="col-4" *ngIf="transactionStatus">
       <div class="alert alert-success" role="alert">
-        <p class="font-weight-bold">Account Balance:</p>
-        <h4>{{ accountBalance }} <span class="font-weight-bold">ETH</span></h4>
+        <p class="font-weight-bold">Transaction Successful...!</p>
+        <p>Transaction Hash: {{transactionStatus?.transactionHash}}</p>
+        <p>From: {{transactionStatus?.from}}</p>
+        <p>To: {{transactionStatus?.to}}</p>
+        <p>Status: {{ transactionStatus?.status }}</p>
       </div>
     </div>
   </div>
