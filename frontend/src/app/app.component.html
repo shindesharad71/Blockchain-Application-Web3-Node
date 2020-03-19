@@ -2,6 +2,7 @@
   <a class="navbar-brand" style="text-align: center; width: 100%;"
     >Blockchain Application (ETH) With Web3</a
   >
+  <button type="button" class="btn btn-danger btn-sm" *ngIf="isAccountCreated" (click)="clear()">Clear</button>
 </nav>
 
 <div class="container h-100 mt-200" *ngIf="!isAccountCreated">

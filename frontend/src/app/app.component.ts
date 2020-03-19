@@ -22,6 +22,8 @@ export class AppComponent implements OnInit {
     if (userId) {
       this.isAccountCreated = true;
       this.getUserById();
+    } else {
+      this.isAccountCreated = false;
     }
   }
 
@@ -37,5 +39,10 @@ export class AppComponent implements OnInit {
     this.appService.getUserById().subscribe((res: any) => {
       this.accountDetails = res;
     });
+  }
+
+  clear() {
+    window.localStorage.clear();
+    this.checkIfAccountCreated();
   }
 }
