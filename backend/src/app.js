@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const Web3 = require("web3");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 require("dotenv").config();
 const middlewares = require("./middlewares");
@@ -14,6 +15,15 @@ const app = express();
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
+
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000
+  })
+);
 
 // Connect to MongoDB.
 mongoose.set("useFindAndModify", false);
@@ -44,7 +54,7 @@ app.get("/create", async (req, res) => {
 
 app.get("/user/:userId", async (req, res) => {
   try {
-    const {userId} = req.params;
+    const { userId } = req.params;
     const result = await AccountSchema.Account.findById(userId);
     res.status(200).json(result);
   } catch (error) {
@@ -53,9 +63,12 @@ app.get("/user/:userId", async (req, res) => {
   }
 });
 
-app.get("/balance/:walletAddress", async (req, res) => {
+app.get("/balance/:userId", async (req, res) => {
   try {
-    const { walletAddress } = req.params;
+    const { userId } = req.params;
+    const { address: walletAddress } = await AccountSchema.Account.findById(
+      userId
+    );
     let walletBalance = await web3Client.eth.getBalance(walletAddress);
     walletBalance = web3Client.utils.fromWei(walletBalance, "ether");
     res.status(201).json({ balance: walletBalance });
@@ -65,12 +78,18 @@ app.get("/balance/:walletAddress", async (req, res) => {
   }
 });
 
-app.get("/send", async (req, res) => {
+app.post("/send", async (req, res) => {
   try {
+    console.log(JSON.stringify(req.body));
+    
+    let from = req.body.from;
+    const { address: walletAddress } = await AccountSchema.Account.findById(
+      from
+    );
     const transaction = await web3Client.eth.sendTransaction({
-      from: "0x5F3Cb193eB20f24bDD746B9FA33680c292b8fe38",
-      to: "0x7CdBA8B5f12ed5310c8d2fd93bc28Ba8DF44fa62",
-      value: web3Client.utils.toWei("50", "ether")
+      from: walletAddress,
+      to: req.body.to,
+      value: req.body.value
     });
     res.status(201).json(transaction);
   } catch (error) {

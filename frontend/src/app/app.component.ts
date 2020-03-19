@@ -60,9 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   transfer() {
-    console.log(this.toAddress);
-    console.log(this.amount);
-
+    this.userId = window.localStorage.getItem('userId');
     const transactionPayload = {
       from: this.userId,
       to: this.toAddress,
@@ -73,7 +71,9 @@ export class AppComponent implements OnInit {
       console.log(res);
       this.transactionStatus = res;
       this.toAddress = '';
-      this.amount  = 0;
+      this.amount = 0;
+    }, err => {
+      console.log(err);
     });
   }
 }
