@@ -10,6 +10,8 @@ export class AppComponent implements OnInit {
   isAccountCreated = false;
   accountDetails: any;
   accountBalance = 0;
+  toAddress: string;
+  amount: number;
   constructor(private appService: AppService) {
 
   }
@@ -54,5 +56,12 @@ export class AppComponent implements OnInit {
   clear() {
     window.localStorage.clear();
     this.checkIfAccountCreated();
+  }
+
+  transfer() {
+    console.log(this.toAddress);
+    console.log(this.amount);
+    
+    
   }
 }
