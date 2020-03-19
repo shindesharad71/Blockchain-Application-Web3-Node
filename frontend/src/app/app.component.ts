@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit {
   isAccountCreated = false;
   accountDetails: any;
+  accountBalance = 0;
   constructor(private appService: AppService) {
 
   }
@@ -38,6 +39,15 @@ export class AppComponent implements OnInit {
   getUserById() {
     this.appService.getUserById().subscribe((res: any) => {
       this.accountDetails = res;
+      this.getAccountBalance();
+    });
+  }
+
+  getAccountBalance() {
+    this.appService.getBalance().subscribe((res: any) => {
+      if (res.balance) {
+        this.accountBalance = res.balance;
+      }
     });
   }
 

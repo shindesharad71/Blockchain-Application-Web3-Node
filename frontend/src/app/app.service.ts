@@ -18,7 +18,6 @@ export class AppService {
     if (userId) {
       return this.http.get(`${environment.BASE_URL}balance/${userId}`);
     }
-    return false;
   }
 
   getUserById() {
