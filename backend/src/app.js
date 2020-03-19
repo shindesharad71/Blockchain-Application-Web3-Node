@@ -80,9 +80,7 @@ app.get("/balance/:userId", async (req, res) => {
 
 app.post("/send", async (req, res) => {
   try {
-    console.log(JSON.stringify(req.body));
-    
-    let from = req.body.from;
+    const from = req.body.from;
     const { address: walletAddress } = await AccountSchema.Account.findById(
       from
     );
@@ -91,7 +89,7 @@ app.post("/send", async (req, res) => {
       to: req.body.to,
       value: req.body.value
     });
-    res.status(201).json(transaction);
+    res.json(transaction);
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
