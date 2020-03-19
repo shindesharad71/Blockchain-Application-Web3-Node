@@ -10,7 +10,7 @@ export class AppService {
   constructor(private http: HttpClient) { }
 
   createAccount() {
-    return this.http.get(`${environment.BASE_URL}account`);
+    return this.http.get(`${environment.BASE_URL}create`);
   }
 
   getBalance() {
